@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useReducer } from 'react'
 import githubContext from '../../context/github/githubContext'
 import alertContext from '../../context/alert/alertContext'
 import TextField from '@mui/material/TextField'
@@ -8,28 +8,46 @@ import Button from '@mui/material/Button'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Stack from '@mui/material/Stack'
 import Debounced from '../../Debounce/Debounced'
+import { SEARCH_USERS } from '../../context/type'
+
 const Search = () => {
   const [text, setText] = useState('')
   const [page, setPage] = useState(1)
   const gitHubContext = useContext(githubContext)
+
   const ac = useContext(alertContext)
+
   const getListUsers = async () => {
-    const result = await gitHubContext.searchUsers(text, page)
+    const res = await gitHubContext.searchUsers(text, page)
+
+    if (page === 1) {
+      console.log('page = 1', gitHubContext)
+      gitHubContext.dispatch({
+        type: SEARCH_USERS,
+        payload: res.data.items
+      })
+    } else {
+      githubContext.dispatch({
+        type: SEARCH_USERS,
+        payload: [...githubContext.users, ...res.data.items]
+      })
+    }
   }
   useEffect(() => {
     if (text) {
       getListUsers()
     }
-  }, [text])
+  }, [text, page])
   useEffect(() => {
     setPage(1)
   }, [text])
   useEffect(() => {
     const handleScroll = () => {
-      let body = document.querySelector('body').clientHeight
-      let scrollHeight = window.scrollY + window.innerHeight
+      const body = document.querySelector('body').clientHeight
+      const scrollHeight = window.scrollY + window.innerHeight
+
       if (body <= Math.ceil(scrollHeight + 1)) {
-        setPage((prev) => prev + 1)
+        setPage(page + 1)
       }
     }
     window.addEventListener('scroll', handleScroll)
@@ -37,6 +55,7 @@ const Search = () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
   const onChange = (e) => {
     setText(e.target.value)
   }

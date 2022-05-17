@@ -7,6 +7,7 @@ import Avatar from '@mui/material/Avatar'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
 
 const User = () => {
   const context = useContext(githubContext)
@@ -41,11 +42,17 @@ const User = () => {
 
   return (
     <Fragment>
-      <Container sx={{ textAlign: 'center' }}>
-        <Stack spacing={5}>
-          <Button variant="contained" color="white" sx={{ width: 150 }}>
-            <Link to="/">Back To Search</Link>
+      <Container alignItems="center">
+        <Stack
+          spacing={5}
+          direction="column"
+          justifyContent="center"
+          alignContent="center"
+        >
+          <Button variant="contained" name="back" sx={{ width: 150 }}>
+            <Link to="/">Back</Link>
           </Button>
+
           <Stack
             direction="column"
             justifyContent="center"
@@ -57,26 +64,20 @@ const User = () => {
               alt="avatar"
               sx={{ width: 150, height: 150 }}
             ></Avatar>
-
             <h1>{name}</h1>
-            {login && (
-              <Fragment>
-                <strong>Username: </strong> {login}
-              </Fragment>
-            )}
-            {blog && (
-              <Fragment>
-                <strong>Website: </strong> {blog}
-              </Fragment>
-            )}
+            <strong>Username: {login} </strong>
+            <strong>Website: </strong> {blog}
             <div>
               <div>Followers: {followers}</div>
               <div>Following: {following}</div>
               <div>Public Repos: {public_repos}</div>
               <div>Public Gists: {public_gists}</div>
             </div>
-
-            <Repos repos={context.repos} />
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Repos repos={context.repos} />
+              </Grid>
+            </Grid>
           </Stack>
         </Stack>
       </Container>

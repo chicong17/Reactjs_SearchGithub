@@ -24,17 +24,6 @@ const GithubState = (props) => {
     const res = await axios.get(
       `https://api.github.com/search/users?q=${text}&page=${page}`
     )
-    if (page === 1) {
-      dispatch({
-        type: SEARCH_USERS,
-        payload: res.data.items
-      })
-    } else {
-      dispatch({
-        type: SEARCH_USERS,
-        payload: [...res.data.items]
-      })
-    }
   }
   const getUser = async (userName) => {
     setLoading()

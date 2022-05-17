@@ -10,32 +10,33 @@ import Button from '@mui/material/Button'
 const UserItem = ({ user: { login, avatar_url, html_url } }) => {
   return (
     <Container sx={{ textAlign: 'center' }}>
-      <Stack spacing={5} direction="column">
-        <Box
-          sx={{
-            width: 300,
-            height: 300,
-            borderRadius: '10 solid',
+      <Box
+        sx={{
+          width: 300,
+          height: 300,
+          borderRadius: '10 solid',
 
-            backgroundColor: 'primary.dark',
-            '&:hover': {
-              backgroundColor: 'primary.main',
-              opacity: [0.9, 0.8, 0.7]
-            }
-          }}
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          padding={1}
-        >
+          backgroundColor: 'primary.dark',
+          '&:hover': {
+            backgroundColor: 'primary.main',
+            opacity: [0.9, 0.8, 0.7]
+          }
+        }}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        padding={1}
+        spacing={5}
+      >
+        <Stack spacing={5} direction="column">
           <Avatar src={avatar_url} sx={{ width: 100, height: 100 }} />
           <h3>{login}</h3>
-          <Button variant="contained">
+          <Button variant="contained" sx={{ color: 'dark' }}>
             <Link to={`user/${login}`}>More</Link>
           </Button>
-        </Box>
-      </Stack>
+        </Stack>
+      </Box>
     </Container>
   )
 }
