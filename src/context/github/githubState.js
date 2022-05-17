@@ -47,6 +47,7 @@ const GithubState = (props) => {
   const getRepos = async (login) => {
     setLoading()
     const res = await axios.get(`https://api.github.com/users/${login}/repos`)
+    console.log(res.data)
     dispatch({
       type: GET_REPOS,
       payload: res.data

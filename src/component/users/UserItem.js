@@ -4,30 +4,38 @@ import { Link } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
 
 const UserItem = ({ user: { login, avatar_url, html_url } }) => {
   return (
     <Container sx={{ textAlign: 'center' }}>
-      <Box
-        sx={{
-          width: 300,
-          height: 300,
+      <Stack spacing={5} direction="column">
+        <Box
+          sx={{
+            width: 300,
+            height: 300,
+            borderRadius: '10 solid',
 
-          backgroundColor: 'primary.dark',
-          '&:hover': {
-            backgroundColor: 'primary.main',
-            opacity: [0.9, 0.8, 0.7]
-          }
-        }}
-      >
-        <Avatar src={avatar_url} />
-        <h3>{login}</h3>
-        <div>
-          <Link to={`user/${login}`} className="btn btn-dark btn-sm my-1">
-            More
-          </Link>
-        </div>
-      </Box>
+            backgroundColor: 'primary.dark',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+              opacity: [0.9, 0.8, 0.7]
+            }
+          }}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          padding={1}
+        >
+          <Avatar src={avatar_url} sx={{ width: 100, height: 100 }} />
+          <h3>{login}</h3>
+          <Button variant="contained">
+            <Link to={`user/${login}`}>More</Link>
+          </Button>
+        </Box>
+      </Stack>
     </Container>
   )
 }

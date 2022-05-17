@@ -5,6 +5,9 @@ import Repos from '../repos/Repos'
 import githubContext from '../../context/github/githubContext'
 import Avatar from '@mui/material/Avatar'
 import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
+
 const User = () => {
   const context = useContext(githubContext)
 
@@ -14,7 +17,6 @@ const User = () => {
   const {
     name,
     avatar_url,
-    bio,
     blog,
     followers,
     following,
@@ -40,56 +42,43 @@ const User = () => {
   return (
     <Fragment>
       <Container sx={{ textAlign: 'center' }}>
-        <Link to="/" className="btn btn-light">
-          Back To Search
-        </Link>
-
-        <div className="card grid-2">
-          <div className="all-center">
-            <Avatar src={avatar_url} alt="avatar"></Avatar>
-            <img
+        <Stack spacing={5}>
+          <Button variant="contained" color="white" sx={{ width: 150 }}>
+            <Link to="/">Back To Search</Link>
+          </Button>
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            spacing={5}
+          >
+            <Avatar
               src={avatar_url}
               alt="avatar"
-              className="round-img"
-              style={{ width: '150px' }}
-            />
+              sx={{ width: 150, height: 150 }}
+            ></Avatar>
+
             <h1>{name}</h1>
-          </div>
-          <div>
-            {bio && (
+            {login && (
               <Fragment>
-                <h3>Bio</h3>
-                <p>{bio}</p>
+                <strong>Username: </strong> {login}
               </Fragment>
             )}
+            {blog && (
+              <Fragment>
+                <strong>Website: </strong> {blog}
+              </Fragment>
+            )}
+            <div>
+              <div>Followers: {followers}</div>
+              <div>Following: {following}</div>
+              <div>Public Repos: {public_repos}</div>
+              <div>Public Gists: {public_gists}</div>
+            </div>
 
-            <ul>
-              <li>
-                {login && (
-                  <Fragment>
-                    <strong>Username: </strong> {login}
-                  </Fragment>
-                )}
-              </li>
-
-              <li>
-                {blog && (
-                  <Fragment>
-                    <strong>Website: </strong> {blog}
-                  </Fragment>
-                )}
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="card text-center">
-          <div className="badge badge-primary">Followers: {followers}</div>
-          <div className="badge badge-success">Following: {following}</div>
-          <div className="badge badge-light">Public Repos: {public_repos}</div>
-          <div className="badge badge-dark">Public Gists: {public_gists}</div>
-        </div>
-
-        <Repos repos={context.repos} />
+            <Repos repos={context.repos} />
+          </Stack>
+        </Stack>
       </Container>
     </Fragment>
   )
