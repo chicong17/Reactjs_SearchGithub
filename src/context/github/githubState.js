@@ -24,6 +24,7 @@ const GithubState = (props) => {
     const res = await axios.get(
       `https://api.github.com/search/users?q=${text}&page=${page}`
     )
+    return res
   }
   const getUser = async (userName) => {
     setLoading()

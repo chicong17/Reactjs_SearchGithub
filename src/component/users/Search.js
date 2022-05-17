@@ -14,12 +14,10 @@ const Search = () => {
   const [text, setText] = useState('')
   const [page, setPage] = useState(1)
   const gitHubContext = useContext(githubContext)
-
   const ac = useContext(alertContext)
-
   const getListUsers = async () => {
     const res = await gitHubContext.searchUsers(text, page)
-
+    console.log(res)
     if (page === 1) {
       console.log('page = 1', gitHubContext)
       gitHubContext.dispatch({
