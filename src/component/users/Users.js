@@ -5,17 +5,15 @@ import githubContext from '../../context/github/githubContext'
 
 const Users = () => {
   const gc = useContext(githubContext)
-
-  const { loading, users } = gc
+  console.log(gc)
+  const { loading, users } = gc.state
 
   if (loading) {
     return <Spinner />
   } else {
     return (
       <div style={userStyle}>
-        {users.map((user) => (
-          <UserItem key={user.id} user={user} />
-        ))}
+        {users && users.map((user) => <UserItem key={user.id} user={user} />)}
       </div>
     )
   }

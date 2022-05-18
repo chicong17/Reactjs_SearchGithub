@@ -15,8 +15,7 @@ const UserItem = ({ user: { login, avatar_url, html_url } }) => {
           width: 300,
           height: 300,
           borderRadius: '10 solid',
-
-          backgroundColor: 'primary.dark',
+          backgroundColor: '#64778e',
           '&:hover': {
             backgroundColor: 'primary.main',
             opacity: [0.9, 0.8, 0.7]
@@ -32,7 +31,10 @@ const UserItem = ({ user: { login, avatar_url, html_url } }) => {
         <Stack spacing={5} direction="column">
           <Avatar src={avatar_url} sx={{ width: 100, height: 100 }} />
           <h3>{login}</h3>
-          <Button variant="contained" sx={{ color: 'dark' }}>
+          <Button
+            variant="outlined"
+            sx={{ color: 'white', backgroundColor: 'white', lineStyle: 'none' }}
+          >
             <Link to={`user/${login}`}>More</Link>
           </Button>
         </Stack>

@@ -5,9 +5,7 @@ import PropTypes from 'prop-types'
 const Repos = ({ repos }) => {
   return (
     <div style={userStyle}>
-      {repos.map((repo) => (
-        <RepoItem repo={repo} key={repo.id} />
-      ))}
+      {repos && repos.map((repo) => <RepoItem repo={repo} key={repo.id} />)}
     </div>
   )
 }

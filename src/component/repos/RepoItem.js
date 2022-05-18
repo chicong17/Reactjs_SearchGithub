@@ -10,16 +10,18 @@ const RepoItem = ({ repo }) => {
   return (
     <Card sx={{ minWidth: 500 }}>
       <CardContent>
-        <Typography gutterBottom variant="h3">
+        <Typography gutterBottom variant="h4">
           {repo.name}
         </Typography>
-        <Typography variant="h5" component="div">
-          {repo.url}
+        <Typography variant="h7" component="div">
+          url: {repo.url}
         </Typography>
-        <Typography variant="body2">{repo.language}</Typography>
+        <Typography variant="body2">Language : {repo.language}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Read Me</Button>
+        <Button size="small" color="info">
+          Read Me
+        </Button>
       </CardActions>
     </Card>
   )

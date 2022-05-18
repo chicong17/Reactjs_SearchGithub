@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useReducer } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import githubContext from '../../context/github/githubContext'
 import alertContext from '../../context/alert/alertContext'
 import TextField from '@mui/material/TextField'
@@ -9,25 +9,30 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Stack from '@mui/material/Stack'
 import Debounced from '../../Debounce/Debounced'
 import { SEARCH_USERS } from '../../context/type'
-
+import getDataApi from '../../services/axiosData'
 const Search = () => {
   const [text, setText] = useState('')
   const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
   const gitHubContext = useContext(githubContext)
+
   const ac = useContext(alertContext)
   const getListUsers = async () => {
-    const res = await gitHubContext.searchUsers(text, page)
-    console.log(res)
+    setLoading(true)
+    const res = await getDataApi(
+      `https://api.github.com/search/users?q=${text}&page=${page}`
+    )
+
+    setLoading(false)
     if (page === 1) {
-      console.log('page = 1', gitHubContext)
       gitHubContext.dispatch({
         type: SEARCH_USERS,
         payload: res.data.items
       })
     } else {
-      githubContext.dispatch({
+      gitHubContext.dispatch({
         type: SEARCH_USERS,
-        payload: [...githubContext.users, ...res.data.items]
+        payload: [...gitHubContext.state.users, ...res.data.items]
       })
     }
   }
@@ -43,7 +48,6 @@ const Search = () => {
     const handleScroll = () => {
       const body = document.querySelector('body').clientHeight
       const scrollHeight = window.scrollY + window.innerHeight
-
       if (body <= Math.ceil(scrollHeight + 1)) {
         setPage(page + 1)
       }
@@ -87,7 +91,7 @@ const Search = () => {
             <Input type="submit" value="Search"></Input>
           </Stack>
         </form>
-        {gitHubContext.users.length > 0 && (
+        {gitHubContext.state.users && gitHubContext.state.users.length > 0 && (
           <Button
             variant="outlined"
             startIcon={<DeleteIcon />}
