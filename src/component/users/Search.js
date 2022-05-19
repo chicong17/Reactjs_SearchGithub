@@ -15,14 +15,12 @@ const Search = () => {
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const gitHubContext = useContext(githubContext)
-
   const ac = useContext(alertContext)
   const getListUsers = async () => {
     setLoading(true)
     const res = await getDataApi(
       `https://api.github.com/search/users?q=${text}&page=${page}`
     )
-
     setLoading(false)
     if (page === 1) {
       gitHubContext.dispatch({
@@ -57,7 +55,6 @@ const Search = () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
-
   const onChange = (e) => {
     setText(e.target.value)
   }
@@ -71,7 +68,6 @@ const Search = () => {
     gitHubContext.searchUsers(text)
     setText('')
   }
-
   return (
     <Container sx={{ textAlign: 'center' }}>
       <Stack
@@ -90,7 +86,7 @@ const Search = () => {
             ></TextField>
           </Stack>
         </form>
-        {gitHubContext.state.users.length > 0 && (
+        {gitHubContext.state.users && gitHubContext.state.users.length > 0 && (
           <Button
             variant="outlined"
             startIcon={<DeleteIcon />}

@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid'
 import getDataApi from '../../services/axiosData'
 import { GET_USER, GET_REPOS } from '../../context/type'
 import { Box } from '@mui/material'
+
 const User = () => {
   const context = useContext(githubContext)
   console.log(context)
@@ -27,7 +28,6 @@ const User = () => {
     public_repos,
     public_gists
   } = context.state.users
-
   const getUser = async () => {
     setLoading(true)
     const result = await getDataApi(`https://api.github.com/users/${login}`)
@@ -38,7 +38,6 @@ const User = () => {
       payload: result.data
     })
   }
-
   const getRepoUser = async () => {
     setLoading(true)
     const result = await getDataApi(
@@ -88,7 +87,6 @@ const User = () => {
           <Button variant="contained" name="back" sx={{ width: 150 }}>
             <Link to="/">Back</Link>
           </Button>
-
           <Stack
             direction="row"
             justifyContent="center"

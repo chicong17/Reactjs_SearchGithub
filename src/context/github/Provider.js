@@ -1,6 +1,7 @@
 import githubContext from './githubContext'
 import { useReducer } from 'react'
 import githubReducer from './githubReducer'
+
 const Provider = ({ children }) => {
   const [state, dispatch] = useReducer(githubReducer, {
     users: [],
