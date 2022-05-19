@@ -11,8 +11,9 @@ const Users = () => {
   } else {
     return (
       <div style={userStyle}>
-        {users.length &&
-          users.map((user) => <UserItem key={user.id} user={user} />)}
+        {users.length
+          ? users.map((user) => <UserItem key={user.id} user={user} />)
+          : true}
       </div>
     )
   }

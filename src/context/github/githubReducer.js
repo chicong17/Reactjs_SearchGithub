@@ -7,7 +7,6 @@ import {
 } from '../type'
 
 const reducer = (state, action) => {
-  console.log(state)
   switch (action.type) {
     case SEARCH_USERS:
       return {

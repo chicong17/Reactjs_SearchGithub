@@ -90,7 +90,7 @@ const Search = () => {
             ></TextField>
           </Stack>
         </form>
-        {gitHubContext.state.users && gitHubContext.state.users.length > 0 && (
+        {gitHubContext.state.users.length > 0 && (
           <Button
             variant="outlined"
             startIcon={<DeleteIcon />}
