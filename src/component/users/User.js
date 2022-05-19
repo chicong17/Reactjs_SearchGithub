@@ -44,28 +44,38 @@ const User = () => {
     const result = await getDataApi(
       `https://api.github.com/users/${login}/repos?&page=${page}&per_page=10`
     )
-    console.log(result)
-    setLoading(false)
     if (page === 1) {
       context.dispatch({
         type: GET_REPOS,
         payload: result.data
       })
     } else {
+      console.log('call api')
       context.dispatch({
         type: GET_REPOS,
         payload: [...context.state.repos, ...result.data]
       })
     }
   }
-
+  useEffect(() => {
+    const handleScroll = () => {
+      let body = document.querySelector('body').clientHeight
+      let scrollHeight = window.scrollY + window.innerHeight
+      if (body <= Math.ceil(scrollHeight + 1)) {
+        setPage((prev) => prev + 1)
+        console.log('cuoi trang')
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
   useEffect(() => {
     getRepoUser()
     getUser()
-  }, [])
-
+  }, [page])
   if (context.loading) return <Spinner />
-
   return (
     <Fragment>
       <Container sx={{ paddingLeft: 20 }} maxWidth="100%">
@@ -87,7 +97,7 @@ const User = () => {
           >
             <Box maxWidth="100%">
               <Stack direction="column" AlignItems="center" spacing={2}>
-                <Avatar src={avatar_url} alt="avatar" maxWidth="100%"></Avatar>
+                <Avatar src={avatar_url} alt="avatar"></Avatar>
                 <h1>{name}</h1>
                 <strong>Username: {login} </strong>
                 <strong>Website: </strong> {blog}

@@ -49,7 +49,7 @@ const Search = () => {
       const body = document.querySelector('body').clientHeight
       const scrollHeight = window.scrollY + window.innerHeight
       if (body <= Math.ceil(scrollHeight + 1)) {
-        setPage(page + 1)
+        setPage((e) => e + 1)
       }
     }
     window.addEventListener('scroll', handleScroll)
@@ -88,7 +88,6 @@ const Search = () => {
               variant="outlined"
               onChange={Debounces}
             ></TextField>
-            <Input type="submit" value="Search"></Input>
           </Stack>
         </form>
         {gitHubContext.state.users && gitHubContext.state.users.length > 0 && (
