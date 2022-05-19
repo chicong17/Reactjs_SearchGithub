@@ -13,11 +13,9 @@ import { Box } from '@mui/material'
 
 const User = () => {
   const context = useContext(githubContext)
-  console.log(context)
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const { login } = useParams()
-  console.log(context)
   const {
     name,
     avatar_url,
@@ -30,7 +28,6 @@ const User = () => {
   const getUser = async () => {
     setLoading(true)
     const result = await getDataApi(`https://api.github.com/users/${login}`)
-    console.log(result)
     setLoading(false)
     context.dispatch({
       type: GET_USER,
@@ -48,7 +45,6 @@ const User = () => {
         payload: result.data
       })
     } else {
-      console.log('call api')
       context.dispatch({
         type: GET_REPOS,
         payload: [...context.state.repos, ...result.data]
@@ -61,7 +57,6 @@ const User = () => {
       let scrollHeight = window.scrollY + window.innerHeight
       if (body <= Math.ceil(scrollHeight + 1)) {
         setPage((prev) => prev + 1)
-        console.log('cuoi trang')
       }
     }
     window.addEventListener('scroll', handleScroll)
