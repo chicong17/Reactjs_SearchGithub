@@ -2,26 +2,24 @@ import React, { useState, useContext, useEffect } from 'react'
 import githubContext from '../../context/github/githubContext'
 import alertContext from '../../context/alert/alertContext'
 import TextField from '@mui/material/TextField'
-import Input from '@mui/material/Input'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Stack from '@mui/material/Stack'
-import Debounced from '../../Debounce/Debounced'
 import { SEARCH_USERS } from '../../context/type'
 import getDataApi from '../../services/axiosData'
+import debounce from 'lodash/debounce'
+
 const Search = () => {
   const [text, setText] = useState('')
   const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false)
+  const [setLoading] = useState(false)
   const gitHubContext = useContext(githubContext)
   const ac = useContext(alertContext)
   const getListUsers = async () => {
-    setLoading(true)
     const res = await getDataApi(
       `https://api.github.com/search/users?q=${text}&page=${page}`
     )
-    setLoading(false)
     if (page === 1) {
       gitHubContext.dispatch({
         type: SEARCH_USERS,
@@ -58,7 +56,8 @@ const Search = () => {
   const onChange = (e) => {
     setText(e.target.value)
   }
-  const Debounces = Debounced(onChange, 500)
+
+  const debounces = debounce(onChange, 500)
   const onSubmit = (e) => {
     e.preventDefault()
     if (text === '') {
@@ -82,7 +81,7 @@ const Search = () => {
               id="outlined-basic"
               label="Search Users"
               variant="outlined"
-              onChange={Debounces}
+              onChange={debounces}
             ></TextField>
           </Stack>
         </form>
